@@ -19,7 +19,7 @@
         <div class="container header__container">
           <p class="header__page-title">Home</p>
           <ul class="header__nav">
-            <li class="header__nav-item home-button header__nav-item-active">
+            <li class="header__nav-item home-button">
               <div class="header__nav-item-icon" title="Home">
                 <img src="assets/images/home.png" alt="Home Icon" />
               </div>
@@ -39,13 +39,51 @@
       </header>
       <main class="main">
         <div class="container main__container">
-          <div class="game">GAME</div>
-          <div class="home">
-            <span>HOME</span>
-            <button class="game-button">Fight!</button>
+          <div class="register">
+            <div class="register__wrapper">
+              <h1>Create your character</h1>
+              <div class="register__input-wrapper">
+                <label for="name">Character name</label>
+                <input
+                  class="register__input"
+                  type="text"
+                  placeholder="Enter your name"
+                  name="name"
+                  id="name"
+                />
+              </div>
+              <button class="register-button">Create</button>
+            </div>
           </div>
-          <div class="character">CHARACTER</div>
-          <div class="settings">SETTINGS</div>
+          <div class="home">
+            <div class="home__wrapper">
+              <button class="game-button">Start the battle</button>
+            </div>
+          </div>
+          <div class="game">GAME</div>
+          <div class="character">
+            <div class="character__wrapper">
+              <div class="character__name">Name</div>
+              <div class="character__image-wrapper">
+                <img
+                  class="character__image"
+                  src="assets/images/char-1.png"
+                  alt="Character"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="settings">
+            <div class="settings__wrapper">
+              <span> Character name:</span>
+              <div class="settings__name-wrapper">
+                <span class="settings__name">Name</span>
+                <button class="settings__change-button" type="button">
+                  <img src="assets/images/edit.png" alt="Edit Icon" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
       <footer class="footer">

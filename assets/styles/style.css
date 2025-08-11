@@ -4,10 +4,14 @@
 
 body {
   background: center / cover no-repeat, rgba(0, 0, 0, 0.5);
-  background-image: url(../images/game.png);
+  background-image: url("../images/game.png");
   background-blend-mode: multiply;
   background-attachment: fixed;
   color: #fff;
+}
+
+p {
+  margin: 0;
 }
 
 .app {
@@ -62,10 +66,18 @@ body {
   height: 50px;
   border-radius: 50%;
   border: 3px solid transparent;
-  box-shadow: 0 0 0 3px #ffd700;
+  box-shadow: 0 0 0 3px #e3bd32;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.header__nav-item-icon:hover,
+.footer__container_info-github:hover,
+.footer__container_info-rsschool:hover {
+  position: relative;
+  top: -3px;
 }
 
 .header__nav-item img {
@@ -73,19 +85,178 @@ body {
   height: 30px;
 }
 
+.register,
 .game,
 .home,
-.character,
-.settings {
-  width: 300px;
-  height: 300px;
+.settings,
+.character {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1000px;
+  width: 100%;
   background: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
 }
 
+.character {
+  max-width: 1000px;
+  width: 100%;
+}
+
+.register,
+.home,
+.settings {
+  max-width: 500px;
+  min-height: 500px;
+}
+
+.home__wrapper,
+.settings__wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  width: 100%;
+  min-height: 500px;
+  height: 100%;
+}
+
+.settings__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 40px;
+  font-size: 24px;
+}
+
+.settings__name-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.settings__change-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  width: 40px;
+  height: 40px;
+}
+
+.settings__change-button img {
+  width: 40px;
+  height: 40px;
+}
+
+.settings__name {
+  color: #e3bd32;
+  text-shadow: 0 0 10px #e3bd32
+}
+
+.character__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 40px;
+}
+
+.register__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 40px;
+  width: 100%;
+}
+
+.register__input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 24px;
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 32px;
+}
+
+#name {
+  padding: 10px 20px;
+  border-radius: 10px;
+  outline: none;
+}
+
+#name::placeholder {
+  opacity: 0.5;
+  font-size: 20px;
+}
+
+.register-button,
+.game-button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  outline: none;
+  background-image: linear-gradient(
+    to bottom,
+    #996c24,
+    #e39f32,
+    #ffd700,
+    #e39f32,
+    #996c24
+  );
+  text-shadow: 2px 2px 4px black, 0 0 5px black;
+  color: #fff;
+  font-weight: 700;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.game-button {
+  width: 300px;
+}
+
+.register-button:hover,
+.game-button:hover {
+  filter: drop-shadow(3px 0 3px white) drop-shadow(-3px 0 3px white);
+}
+
+.home,
 .game,
 .character,
 .settings {
   display: none;
+}
+
+.character__image-wrapper {
+  position: relative;
+  max-width: 500px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid #ffd700;
+  background-image: linear-gradient(
+    120deg,
+    #ffd700 0%,
+    #ffd700 50%,
+    #ff9900 50%,
+    #ff9900 100%
+  );
+  background-origin: border-box;
+  background-clip: border-box;
+}
+
+.character__image {
+  width: 100%;
+  display: block;
+  border-radius: 50px;
 }
 
 .footer__container_info {
@@ -94,6 +265,12 @@ body {
   align-items: center;
   width: 350px;
   margin: 0 auto;
+}
+
+.footer__container_info-github,
+.footer__container_info-rsschool {
+  cursor: pointer;
+  filter: brightness(0) saturate(100%) invert(72%) sepia(75%) saturate(388%) hue-rotate(2deg) brightness(89%) contrast(105%);
 }
 
 .footer__container_info-github {
@@ -108,4 +285,5 @@ body {
 
 .footer__container_info-copyright {
   font-size: 26px;
+  color: #e3bd32;
 }

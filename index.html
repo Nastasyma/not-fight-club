@@ -46,13 +46,24 @@
               <h1>Create your character</h1>
               <div class="register__input-wrapper">
                 <label for="name">Character name</label>
-                <input class="register__input" type="text" placeholder="Enter your name" name="name" id="name" />
+                <input
+                  class="register__input"
+                  type="text"
+                  minlength="1"
+                  maxlength="20"
+                  placeholder="Enter your character's name"
+                  name="name"
+                  id="name"
+                />
               </div>
-              <button class="register-button button" data-screen="home">Create</button>
+              <button class="register-button button" data-screen="home" disabled>Create</button>
             </div>
           </div>
           <div class="home screen">
             <div class="home__wrapper">
+              <div class="home__image-wrapper">
+                <img src="assets/images/fight.jpeg" alt="Fight image" />
+              </div>
               <button class="game-button button" data-screen="game">Start the battle</button>
             </div>
           </div>
@@ -60,10 +71,11 @@
             <div class="game__wrapper">
               <div class="game__character-wrapper">
                 <div class="game__character-image-wrapper">
-                  <div class="game__character-name">Name</div>
-                  <div class="game__character-image">
+                  <div class="game__character-name player-name">Name</div>
+                  <div class="game__character-image player-avatar">
                     <img src="assets/images/char-1.jpeg" alt="Character" />
                   </div>
+                  <progress value="70" max="100" class="game__character-health player"></progress>
                 </div>
               </div>
               <div class="game__actions">
@@ -124,10 +136,11 @@
               </div>
               <div class="game__character-wrapper">
                 <div class="game__character-image-wrapper">
-                  <div class="game__character-name">Beast</div>
-                  <div class="game__character-image">
+                  <div class="game__character-name enemy-name">Beast</div>
+                  <div class="game__character-image enemy-avatar">
                     <img src="assets/images/enemy-1.jpeg" alt="Character" />
                   </div>
+                  <progress value="50" max="100" class="game__character-health enemy"></progress>
                 </div>
               </div>
             </div>
@@ -142,10 +155,43 @@
               <div class="character__name">Name</div>
               <div class="character__image-wrapper">
                 <img class="character__image" src="assets/images/char-1.jpeg" alt="Character" />
+                <img class="character__edit" src="assets/icons/edit.svg" alt="Edit" />
+                <div class="character__overlay"></div>
               </div>
               <div>
                 <p>Wins: 0</p>
                 <p>Losses: 0</p>
+              </div>
+            </div>
+            <div class="character__popup">
+              <button type="button" class="character__popup-close">
+                <img src="assets/images/close.png" alt="Close" />
+              </button>
+              <div class="character__popup-wrapper">
+                <div class="character__popup-item">
+                  <img src="assets/images/char-1.jpeg" alt="Character" />
+                </div>
+                <div class="character__popup-item">
+                  <img src="assets/images/char-2.jpeg" alt="Character" />
+                </div>
+                <div class="character__popup-item">
+                  <img src="assets/images/char-3.jpeg" alt="Character" />
+                </div>
+                <div class="character__popup-item">
+                  <img src="assets/images/char-4.jpeg" alt="Character" />
+                </div>
+                <div class="character__popup-item">
+                  <img src="assets/images/char-5.jpeg" alt="Character" />
+                </div>
+                <div class="character__popup-item">
+                  <img src="assets/images/char-6.jpeg" alt="Character" />
+                </div>
+                <div class="character__popup-item">
+                  <img src="assets/images/char-7.jpeg" alt="Character" />
+                </div>
+                <div class="character__popup-item">
+                  <img src="assets/images/char-8.jpeg" alt="Character" />
+                </div>
               </div>
             </div>
           </div>
@@ -154,13 +200,13 @@
               <span> Character name</span>
               <div class="settings__name-wrapper">
                 <span class="settings__name">Name</span>
-                <button class="settings__change-button" type="button">
+                <button class="settings__change-button" type="button" >
                   <img src="assets/images/edit.png" alt="Edit Icon" />
                 </button>
               </div>
               <div class="settings__input-wrapper">
-                <input type="text" placeholder="Enter your name" id="settings-name" name="settings-name" />
-                <button type="button" class="settings__save-button">
+                <input type="text" placeholder="Enter your character's name" minlength="1" maxlength="20" id="settings-name" name="settings-name" />
+                <button type="button" class="settings__save-button" disabled >
                   <img src="assets/images/ок.png" alt="Save Icon" />
                 </button>
               </div>

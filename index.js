@@ -1,3 +1,38 @@
+const screens = document.querySelectorAll('.screen');
+const buttons = document.querySelectorAll('.button');
+const settingsName = document.querySelector('.settings__name-wrapper');
+const settingsInput = document.querySelector('.settings__input-wrapper');
+const settingsSave = document.querySelector('.settings__save-button');
+const settingsChange = document.querySelector('.settings__change-button');
+const pageTitle = document.querySelector('.header__page-title');
+
+function showScreen(screenName) {
+  screens.forEach((screen) => {
+    screen.classList.remove('active');
+  });
+  document.querySelector(`.${screenName}`).classList.add('active');
+  pageTitle.textContent = screenName.charAt(0).toUpperCase() + screenName.slice(1);
+}
+
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const screenName = button.getAttribute('data-screen');
+    showScreen(screenName);
+  });
+});
+
+settingsChange.addEventListener('click', () => {
+  settingsName.style.display = 'none';
+  settingsInput.style.display = 'flex';
+  settingsSave.style.display = 'flex';
+});
+
+settingsSave.addEventListener('click', () => {
+  settingsName.style.display = 'flex';
+  settingsInput.style.display = 'none';
+  settingsSave.style.display = 'none';
+});
+
 // const gameWrapper = document.querySelector(".game");
 // const registerWrapper = document.querySelector(".register");
 // const homeWrapper = document.querySelector(".home");
@@ -51,20 +86,3 @@
 // characterButton.addEventListener("click", character);
 // settingsButton.addEventListener("click", settings);
 // registerButton.addEventListener("click", home);
-
-const screens = document.querySelectorAll('.screen');
-const buttons = document.querySelectorAll('.button');
-
-function showScreen(screenName) {
-  screens.forEach((screen) => {
-    screen.classList.remove('active');
-  });
-  document.querySelector(`.${screenName}`).classList.add('active');
-}
-
-buttons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const screenName = button.getAttribute('data-screen');
-    showScreen(screenName);
-  });
-});

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -25,19 +25,13 @@
               </div>
             </li>
 
-            <li
-              class="header__nav-item character-button button"
-              data-screen="character"
-            >
+            <li class="header__nav-item character-button button" data-screen="character">
               <div class="header__nav-item-icon" title="Character">
                 <img src="assets/images/human.png" alt="Human Icon" />
               </div>
             </li>
 
-            <li
-              class="header__nav-item settings-button button"
-              data-screen="settings"
-            >
+            <li class="header__nav-item settings-button button" data-screen="settings">
               <div class="header__nav-item-icon" title="Settings">
                 <img src="assets/images/settings.png" alt="Settings Icon" />
               </div>
@@ -52,13 +46,7 @@
               <h1>Create your character</h1>
               <div class="register__input-wrapper">
                 <label for="name">Character name</label>
-                <input
-                  class="register__input"
-                  type="text"
-                  placeholder="Enter your name"
-                  name="name"
-                  id="name"
-                />
+                <input class="register__input" type="text" placeholder="Enter your name" name="name" id="name" />
               </div>
               <button class="register-button button" data-screen="home">Create</button>
             </div>
@@ -68,16 +56,92 @@
               <button class="game-button button" data-screen="game">Start the battle</button>
             </div>
           </div>
-          <div class="game screen">GAME</div>
+          <div class="game screen">
+            <div class="game__wrapper">
+              <div class="game__character-wrapper">
+                <div class="game__character-image-wrapper">
+                  <div class="game__character-name">Name</div>
+                  <div class="game__character-image">
+                    <img src="assets/images/char-1.jpeg" alt="Character" />
+                  </div>
+                </div>
+              </div>
+              <div class="game__actions">
+                <p>Please pick 1 Attack zone and 2 Defence zones</p>
+                <div class="game__actions-title">
+                  <p>Attack Zones</p>
+                  <p>Defence Zones</p>
+                </div>
+                <div class="game__actions-main_field">
+                  <div class="game__actions-field_attack-zones">
+                    <div class="game__actions-field_attack-zones-item">
+                      <label for="head">Head</label>
+                      <input type="checkbox" name="head-attack" id="head-attack" />
+                    </div>
+                    <div class="game__actions-field_attack-zones-item">
+                      <label for="head">Neck</label>
+                      <input type="checkbox" name="neck-attack" id="neck-attack" />
+                    </div>
+                    <div class="game__actions-field_attack-zones-item">
+                      <label for="head">Body</label>
+                      <input type="checkbox" name="body-attack" id="body-attack" />
+                    </div>
+                    <div class="game__actions-field_attack-zones-item">
+                      <label for="head">Belly</label>
+                      <input type="checkbox" name="belly-attack" id="belly-attack" />
+                    </div>
+                    <div class="game__actions-field_attack-zones-item">
+                      <label for="head">Legs</label>
+                      <input type="checkbox" name="legs-attack" id="legs-attack" />
+                    </div>
+                  </div>
+                  <div class="game__actions-field_defence-zones">
+                    <div class="game__actions-field_defence-zones-item">
+                      <input type="checkbox" name="head-defence" id="head-defence" />
+                      <label for="head">Head</label>
+                    </div>
+                    <div class="game__actions-field_defence-zones-item">
+                      <input type="checkbox" name="neck-defence" id="neck-defence" />
+                      <label for="head">Neck</label>
+                    </div>
+                    <div class="game__actions-field_defence-zones-item">
+                      <input type="checkbox" name="body-defence" id="body-defence" />
+                      <label for="head">Body</label>
+                    </div>
+                    <div class="game__actions-field_defence-zones-item">
+                      <input type="checkbox" name="belly-defence" id="belly-defence" />
+                      <label for="head">Belly</label>
+                    </div>
+                    <div class="game__actions-field_defence-zones-item">
+                      <input type="checkbox" name="legs-defence" id="legs-defence" />
+                      <label for="head">Legs</label>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="game__actions-button">
+                  <img src="assets/images/swords.png" alt="Attack Icon" />
+                </button>
+              </div>
+              <div class="game__character-wrapper">
+                <div class="game__character-image-wrapper">
+                  <div class="game__character-name">Beast</div>
+                  <div class="game__character-image">
+                    <img src="assets/images/enemy-1.jpeg" alt="Character" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="game__log_wrapper">
+              <div class="game__log">
+                <p>Какой-то текст</p>
+              </div>
+            </div>
+          </div>
           <div class="character screen">
             <div class="character__wrapper">
               <div class="character__name">Name</div>
               <div class="character__image-wrapper">
-                <img
-                  class="character__image"
-                  src="assets/images/char-1.png"
-                  alt="Character"
-                />
+                <img class="character__image" src="assets/images/char-1.jpeg" alt="Character" />
               </div>
               <div>
                 <p>Wins: 0</p>
@@ -87,11 +151,17 @@
           </div>
           <div class="settings screen">
             <div class="settings__wrapper">
-              <span> Character name:</span>
+              <span> Character name</span>
               <div class="settings__name-wrapper">
                 <span class="settings__name">Name</span>
                 <button class="settings__change-button" type="button">
                   <img src="assets/images/edit.png" alt="Edit Icon" />
+                </button>
+              </div>
+              <div class="settings__input-wrapper">
+                <input type="text" placeholder="Enter your name" id="settings-name" name="settings-name" />
+                <button type="button" class="settings__save-button">
+                  <img src="assets/images/ок.png" alt="Save Icon" />
                 </button>
               </div>
             </div>
@@ -102,11 +172,7 @@
         <div class="container footer__container">
           <div class="footer__container_info">
             <a href="https://github.com/Nastasyma">
-              <img
-                src="assets/icons/github_logo.svg"
-                class="footer__container_info-github"
-                alt="github logo"
-              />
+              <img src="assets/icons/github_logo.svg" class="footer__container_info-github" alt="github logo" />
             </a>
             <div class="footer__container_info-copyright"><b>© 2025</b></div>
             <a href="https://rs.school/js/">

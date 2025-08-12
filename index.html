@@ -19,17 +19,25 @@
         <div class="container header__container">
           <p class="header__page-title">Home</p>
           <ul class="header__nav">
-            <li class="header__nav-item home-button">
+            <li class="header__nav-item home-button button" data-screen="home">
               <div class="header__nav-item-icon" title="Home">
                 <img src="assets/images/home.png" alt="Home Icon" />
               </div>
             </li>
-            <li class="header__nav-item character-button">
+
+            <li
+              class="header__nav-item character-button button"
+              data-screen="character"
+            >
               <div class="header__nav-item-icon" title="Character">
                 <img src="assets/images/human.png" alt="Human Icon" />
               </div>
             </li>
-            <li class="header__nav-item settings-button">
+
+            <li
+              class="header__nav-item settings-button button"
+              data-screen="settings"
+            >
               <div class="header__nav-item-icon" title="Settings">
                 <img src="assets/images/settings.png" alt="Settings Icon" />
               </div>
@@ -39,7 +47,7 @@
       </header>
       <main class="main">
         <div class="container main__container">
-          <div class="register">
+          <div class="register screen active">
             <div class="register__wrapper">
               <h1>Create your character</h1>
               <div class="register__input-wrapper">
@@ -52,16 +60,16 @@
                   id="name"
                 />
               </div>
-              <button class="register-button">Create</button>
+              <button class="register-button button" data-screen="home">Create</button>
             </div>
           </div>
-          <div class="home">
+          <div class="home screen">
             <div class="home__wrapper">
-              <button class="game-button">Start the battle</button>
+              <button class="game-button button" data-screen="game">Start the battle</button>
             </div>
           </div>
-          <div class="game">GAME</div>
-          <div class="character">
+          <div class="game screen">GAME</div>
+          <div class="character screen">
             <div class="character__wrapper">
               <div class="character__name">Name</div>
               <div class="character__image-wrapper">
@@ -71,9 +79,13 @@
                   alt="Character"
                 />
               </div>
+              <div>
+                <p>Wins: 0</p>
+                <p>Losses: 0</p>
+              </div>
             </div>
           </div>
-          <div class="settings">
+          <div class="settings screen">
             <div class="settings__wrapper">
               <span> Character name:</span>
               <div class="settings__name-wrapper">

@@ -155,7 +155,7 @@ p {
 
 .settings__name {
   color: #e3bd32;
-  text-shadow: 0 0 10px #e3bd32
+  text-shadow: 0 0 10px #e3bd32;
 }
 
 .character__wrapper {
@@ -163,6 +163,7 @@ p {
   flex-direction: column;
   gap: 30px;
   padding: 40px;
+  font-size: 24px;
 }
 
 .register__wrapper {
@@ -228,16 +229,17 @@ h1 {
   filter: drop-shadow(3px 0 3px white) drop-shadow(-3px 0 3px white);
 }
 
-.home,
-.game,
-.character,
-.settings {
+.screen {
   display: none;
+}
+
+.screen.active {
+  display: flex;
 }
 
 .character__image-wrapper {
   position: relative;
-  max-width: 500px;
+  max-width: 400px;
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -259,6 +261,10 @@ h1 {
   border-radius: 50px;
 }
 
+.character__name {
+  align-self: center;
+}
+
 .footer__container_info {
   display: flex;
   justify-content: space-between;
@@ -270,7 +276,8 @@ h1 {
 .footer__container_info-github,
 .footer__container_info-rsschool {
   cursor: pointer;
-  filter: brightness(0) saturate(100%) invert(72%) sepia(75%) saturate(388%) hue-rotate(2deg) brightness(89%) contrast(105%);
+  filter: brightness(0) saturate(100%) invert(72%) sepia(75%) saturate(388%)
+    hue-rotate(2deg) brightness(89%) contrast(105%);
 }
 
 .footer__container_info-github {

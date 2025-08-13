@@ -1,5 +1,7 @@
 const screens = document.querySelectorAll('.screen');
 const buttons = document.querySelectorAll('.button');
+const header = document.querySelector('.header');
+const footer = document.querySelector('.footer');
 const settingsNameWrapper = document.querySelector('.settings__name-wrapper');
 const settingsInputWrapper = document.querySelector('.settings__input-wrapper');
 const settingsSave = document.querySelector('.settings__save-button');
@@ -18,12 +20,22 @@ const popupImages = document.querySelectorAll('.character__popup-item img');
 const characterImage = document.querySelector('.character__image');
 const gamePlayerImage = document.querySelector('.player-avatar img');
 
+
+// screens
 function showScreen(screenName) {
   screens.forEach((screen) => {
     screen.classList.remove('active');
   });
   document.querySelector(`.${screenName}`).classList.add('active');
   pageTitle.textContent = screenName.charAt(0).toUpperCase() + screenName.slice(1);
+
+  if (screenName === 'register') {
+    header.classList.add('hidden');
+    footer.classList.add('hidden');
+  } else {
+    header.classList.remove('hidden');
+    footer.classList.remove('hidden');
+  }
 }
 
 buttons.forEach((button) => {
@@ -32,6 +44,10 @@ buttons.forEach((button) => {
     showScreen(screenName);
   });
 });
+
+showScreen('register');
+
+// character
 
 settingsChange.addEventListener('click', () => {
   settingsNameWrapper.style.display = 'none';
@@ -71,20 +87,11 @@ settingsSave.addEventListener('click', () => {
   setCharacterName();
 });
 
-nameInput.addEventListener('input', () => {
-  if (nameInput.value.length >= 1) {
-    registerButton.disabled = false;
-  } else {
-    registerButton.disabled = true;
-  }
-});
-
-settingsInput.addEventListener('input', () => {
-  if (settingsInput.value.length >= 1) {
-    settingsSave.disabled = false;
-  } else {
-    settingsSave.disabled = true;
-  }
+[nameInput, settingsInput].forEach((input, index) => {
+  const button = index === 0 ? registerButton : settingsSave;
+  input.addEventListener('input', () => {
+    button.disabled = input.value.length < 1;
+  });
 });
 
 function setCharacterName() {
@@ -96,5 +103,24 @@ function setCharacterName() {
   settingsName.textContent = localStorage.getItem('_NFC-name');
 }
 
-showScreen('register');
 setCharacterName();
+
+// game
+
+const attackButton = document.querySelector('.game__actions-button');
+const attackZoneCheckboxes = document.querySelectorAll('.game__actions-field_attack-zones input[type="checkbox"]');
+const defenseZoneCheckboxes = document.querySelectorAll('.game__actions-field_defence-zones input[type="checkbox"]');
+
+function checkZones() {
+  const attackZonesSelected = Array.from(attackZoneCheckboxes).filter((checkbox) => checkbox.checked).length;
+  const defenseZonesSelected = Array.from(defenseZoneCheckboxes).filter((checkbox) => checkbox.checked).length;
+
+  attackButton.disabled = !(attackZonesSelected === 1 && defenseZonesSelected === 2);
+}
+
+attackZoneCheckboxes.forEach((checkbox) => checkbox.addEventListener('change', checkZones));
+defenseZoneCheckboxes.forEach((checkbox) => checkbox.addEventListener('change', checkZones));
+
+checkZones();
+
+

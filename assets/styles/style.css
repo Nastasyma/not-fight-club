@@ -37,6 +37,13 @@ p {
 .header,
 .footer {
   background: rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease-in-out;
+}
+
+.header.hidden,
+.footer.hidden {
+  visibility: hidden;
+  opacity: 0;
 }
 
 .header__container,
@@ -196,6 +203,15 @@ p {
   scale: 0.95;
 }
 
+.game__actions-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.game__actions-button:active:disabled {
+  scale: 1;
+}
+
 .settings__change-button img,
 .settings__save-button img {
   width: 40px;
@@ -263,6 +279,7 @@ h1 {
   padding: 10px 20px;
   border-radius: 10px;
   outline: none;
+  border: none;
 }
 
 #name::placeholder,
@@ -281,11 +298,8 @@ h1 {
   border-radius: 10px;
   outline: none;
   background-image: linear-gradient(to bottom, #996c24, #e39f32, #ffd700, #e39f32, #996c24);
-  text-shadow:
-    2px 2px 4px black,
-    0 0 5px black;
-  color: #fff;
-  font-weight: 700;
+  color: black;
+  font-weight: bold;
   font-size: 24px;
   border: none;
   cursor: pointer;

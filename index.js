@@ -20,7 +20,6 @@ const popupImages = document.querySelectorAll('.character__popup-item img');
 const characterImage = document.querySelector('.character__image');
 const gamePlayerImage = document.querySelector('.player-avatar img');
 
-
 // screens
 function showScreen(screenName) {
   screens.forEach((screen) => {
@@ -123,4 +122,93 @@ defenseZoneCheckboxes.forEach((checkbox) => checkbox.addEventListener('change', 
 
 checkZones();
 
+const enemies = [
+  {
+    name: 'Beast',
+    attackZones: 2,
+    defenseZones: 1,
+  },
+  {
+    name: 'Spider',
+    attackZones: 1,
+    defenseZones: 2,
+  },
+  {
+    name: 'Dragon',
+    attackZones: 2,
+    defenseZones: 1,
+  },
+];
 
+const enemy = enemies[Math.floor(Math.random() * enemies.length)];
+console.log(enemy);
+
+const playerAttackZones = [];
+const playerDefenseZones = [];
+
+function chooseZones() {
+  playerAttackZones.length = 0;
+  playerDefenseZones.length = 0;
+
+  const attackZone = document.querySelector('.game__actions-field_attack-zones input[type="checkbox"]:checked');
+  playerAttackZones.push(parseInt(attackZone.getAttribute('data-index')));
+
+  const defenseZones = document.querySelectorAll('.game__actions-field_defence-zones input[type="checkbox"]:checked');
+  playerDefenseZones.push(
+    parseInt(defenseZones[0].getAttribute('data-index')),
+    parseInt(defenseZones[1].getAttribute('data-index')),
+  );
+
+  console.log('player', playerAttackZones, playerDefenseZones);
+}
+function exchangeBlows() {
+  const enemyAttackZones = [];
+  const enemyDefenseZones = [];
+  for (let i = 0; i < enemy.attackZones; i++) {
+    enemyAttackZones.push(Math.floor(Math.random() * 5));
+  }
+  for (let i = 0; i < enemy.defenseZones; i++) {
+    enemyDefenseZones.push(Math.floor(Math.random() * 5));
+  }
+
+  console.log('enemy', enemyAttackZones, enemyDefenseZones);
+
+  let playerDamage = 0;
+  let enemyDamage = 0;
+
+  for (let i = 0; i < playerAttackZones.length; i++) {
+    const zone = playerAttackZones[i];
+    const enemyZone = Math.floor(Math.random() * 5);
+    if (enemyZone !== zone) {
+      playerDamage += 10;
+      console.log(`Player deals damage to ${zone}!`);
+    } else {
+      console.log(`Player hits enemy's defense zone in  ${zone}!`);
+    }
+  }
+
+  for (let i = 0; i < enemyAttackZones.length; i++) {
+    const zone = enemyAttackZones[i];
+    const playerZone = Math.floor(Math.random() * 5);
+    if (playerZone !== zone) {
+      enemyDamage += 10;
+      console.log(`Enemy deals damage to ${zone}!`);
+    } else {
+      console.log(`Enemy hits player's defense zone in ${zone}!`);
+    }
+  }
+
+  const playerHealth = document.querySelector('.game__character-health.player');
+  const enemyHealth = document.querySelector('.game__character-health.enemy');
+  playerHealth.value -= enemyDamage;
+  enemyHealth.value -= playerDamage;
+
+  console.log(`Player received ${enemyDamage} damage!`);
+  console.log(`Enemy received ${playerDamage} damage!`);
+}
+
+function startBattle() {
+  chooseZones();
+  exchangeBlows();
+}
+document.querySelector('.game__actions-button').addEventListener('click', startBattle);

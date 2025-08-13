@@ -109,6 +109,10 @@ setCharacterName();
 const attackButton = document.querySelector('.game__actions-button');
 const attackZoneCheckboxes = document.querySelectorAll('.game__actions-field_attack-zones input[type="checkbox"]');
 const defenseZoneCheckboxes = document.querySelectorAll('.game__actions-field_defence-zones input[type="checkbox"]');
+const playerHealth = document.querySelector('.game__character-health.player');
+const enemyHealth = document.querySelector('.game__character-health.enemy');
+const enemyName = document.querySelector('.game__character-name.enemy-name');
+const enemyImage = document.querySelector('.game__character-image.enemy-avatar img');
 
 function checkZones() {
   const attackZonesSelected = Array.from(attackZoneCheckboxes).filter((checkbox) => checkbox.checked).length;
@@ -125,18 +129,21 @@ checkZones();
 const enemies = [
   {
     name: 'Beast',
-    attackZones: 2,
-    defenseZones: 1,
+    attackZones: 1,
+    defenseZones: 2,
+    health: 120,
   },
   {
     name: 'Spider',
-    attackZones: 1,
-    defenseZones: 2,
+    attackZones: 3,
+    defenseZones: 1,
+    health: 70,
   },
   {
     name: 'Dragon',
     attackZones: 2,
     defenseZones: 1,
+    health: 100,
   },
 ];
 
@@ -145,6 +152,16 @@ console.log(enemy);
 
 const playerAttackZones = [];
 const playerDefenseZones = [];
+
+function setEnemy() {
+  enemyHealth.setAttribute('max', enemy.health);
+  enemyHealth.setAttribute('value', enemy.health);
+
+  enemyName.textContent = enemy.name;
+  enemyImage.src = `assets/images/${enemy.name}.jpeg`;
+}
+
+setEnemy();
 
 function chooseZones() {
   playerAttackZones.length = 0;
@@ -161,14 +178,24 @@ function chooseZones() {
 
   console.log('player', playerAttackZones, playerDefenseZones);
 }
-function exchangeBlows() {
+function exchangeAttacks() {
   const enemyAttackZones = [];
   const enemyDefenseZones = [];
+
   for (let i = 0; i < enemy.attackZones; i++) {
-    enemyAttackZones.push(Math.floor(Math.random() * 5));
+    let zone;
+    do {
+      zone = Math.floor(Math.random() * 5);
+    } while (enemyAttackZones.indexOf(zone) !== -1);
+    enemyAttackZones.push(zone);
   }
+
   for (let i = 0; i < enemy.defenseZones; i++) {
-    enemyDefenseZones.push(Math.floor(Math.random() * 5));
+    let zone;
+    do {
+      zone = Math.floor(Math.random() * 5);
+    } while (enemyDefenseZones.indexOf(zone) !== -1);
+    enemyDefenseZones.push(zone);
   }
 
   console.log('enemy', enemyAttackZones, enemyDefenseZones);
@@ -183,7 +210,7 @@ function exchangeBlows() {
       playerDamage += 10;
       console.log(`Player deals damage to ${zone}!`);
     } else {
-      console.log(`Player hits enemy's defense zone in  ${zone}!`);
+      console.log(`Player hits enemy's defense zone in ${zone}!`);
     }
   }
 
@@ -198,8 +225,6 @@ function exchangeBlows() {
     }
   }
 
-  const playerHealth = document.querySelector('.game__character-health.player');
-  const enemyHealth = document.querySelector('.game__character-health.enemy');
   playerHealth.value -= enemyDamage;
   enemyHealth.value -= playerDamage;
 
@@ -207,8 +232,7 @@ function exchangeBlows() {
   console.log(`Enemy received ${playerDamage} damage!`);
 }
 
-function startBattle() {
+attackButton.addEventListener('click', () => {
   chooseZones();
-  exchangeBlows();
-}
-document.querySelector('.game__actions-button').addEventListener('click', startBattle);
+  exchangeAttacks();
+});

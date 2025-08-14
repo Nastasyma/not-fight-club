@@ -113,6 +113,10 @@ const playerHealth = document.querySelector('.game__character-health.player');
 const enemyHealth = document.querySelector('.game__character-health.enemy');
 const enemyName = document.querySelector('.game__character-name.enemy-name');
 const enemyImage = document.querySelector('.game__character-image.enemy-avatar img');
+const gameLog = document.querySelector('.game__log');
+const overlay = document.querySelector('.overlay');
+const overlayText = document.querySelector('.overlay__text');
+const overlayButton = document.querySelector('.overlay__close');
 
 function checkZones() {
   const attackZonesSelected = Array.from(attackZoneCheckboxes).filter((checkbox) => checkbox.checked).length;
@@ -146,6 +150,8 @@ const enemies = [
     health: 100,
   },
 ];
+
+const zoneNames = ['head', 'neck', 'body', 'belly', 'legs'];
 
 const enemy = enemies[Math.floor(Math.random() * enemies.length)];
 console.log(enemy);
@@ -206,33 +212,97 @@ function exchangeAttacks() {
   for (let i = 0; i < playerAttackZones.length; i++) {
     const zone = playerAttackZones[i];
     const enemyZone = Math.floor(Math.random() * 5);
+    const criticalChance = Math.random();
+    const criticalDamage = 1.5;
+
     if (enemyZone !== zone) {
-      playerDamage += 10;
-      console.log(`Player deals damage to ${zone}!`);
+      if (criticalChance < 0.2) {
+        playerDamage += 10 * criticalDamage;
+        // console.log(`Player deals critical damage to ${zoneNames[zone]}!`);
+        const logString = document.createElement('p');
+        logString.innerHTML = `<span class="log-name">${characterName.textContent}</span> attacks with critical hit to <span class="log-zone">${zoneNames[zone]}</span> and deals <span class="log-damage">${10 * criticalDamage}</span> damage!`;
+        gameLog.appendChild(logString);
+      } else {
+        playerDamage += 10;
+        // console.log(`Player deals damage to ${zoneNames[zone]}!`);
+        const logString = document.createElement('p');
+        logString.innerHTML = `<span class="log-name">${characterName.textContent}</span> attacks to <span class="log-zone">${zoneNames[zone]}</span> and deals <span class="log-damage">10</span> damage!`;
+        gameLog.appendChild(logString);
+      }
     } else {
-      console.log(`Player hits enemy's defense zone in ${zone}!`);
+      if (criticalChance < 0.2) {
+        playerDamage += 10 * criticalDamage;
+        // console.log(`Player hits enemy's defense zone in ${zoneNames[zone]} and breaks through!`);
+        const logString = document.createElement('p');
+        logString.innerHTML = `<span class="log-name">${characterName.textContent}</span> breaks through enemy's defense zone in <span class="log-zone">${zoneNames[zone]}</span> and deals <span class="log-damage">${10 * criticalDamage}</span> damage!`;
+        gameLog.appendChild(logString);
+      } else {
+        // console.log(`Player hits enemy's defense zone in ${zoneNames[zone]}!`);
+        const logString = document.createElement('p');
+        logString.innerHTML = `<span class="log-name">${characterName.textContent}</span> hits enemy's defense zone in <span class="log-zone">${zoneNames[zone]}</span>!`;
+        gameLog.appendChild(logString);
+      }
     }
   }
 
   for (let i = 0; i < enemyAttackZones.length; i++) {
     const zone = enemyAttackZones[i];
     const playerZone = Math.floor(Math.random() * 5);
+    const criticalChance = Math.random();
+    const criticalDamage = 1.5;
+
     if (playerZone !== zone) {
-      enemyDamage += 10;
-      console.log(`Enemy deals damage to ${zone}!`);
+      if (criticalChance < 0.2) {
+        enemyDamage += 10 * criticalDamage;
+        // console.log(`Enemy deals critical damage to ${zoneNames[zone]}!`);
+        const logString = document.createElement('p');
+        logString.innerHTML = `<span class="log-name">${enemyName.textContent}</span> attacks with critical hit to <span class="log-zone">${zoneNames[zone]}</span> and deals <span class="log-damage">${10 * criticalDamage}</span> damage!`;
+        gameLog.appendChild(logString);
+      } else {
+        enemyDamage += 10;
+        // console.log(`Enemy deals damage to ${zoneNames[zone]}!`);
+        const logString = document.createElement('p');
+        logString.innerHTML = `<span class="log-name">${enemyName.textContent}</span> attacks to <span class="log-zone">${zoneNames[zone]}</span> and deals <span class="log-damage">10</span> damage!`;
+        gameLog.appendChild(logString);
+      }
     } else {
-      console.log(`Enemy hits player's defense zone in ${zone}!`);
+      if (criticalChance < 0.2) {
+        enemyDamage += 10 * criticalDamage;
+        // console.log(`Enemy hits player's defense zone in ${zoneNames[zone]} and breaks through!`);
+        const logString = document.createElement('p');
+        logString.innerHTML = `<span class="log-name">${enemyName.textContent}</span> breaks through player's defense zone in <span class="log-zone">${zoneNames[zone]}</span> and deals <span class="log-damage">${10 * criticalDamage}</span> damage!`;
+        gameLog.appendChild(logString);
+      } else {
+        // console.log(`Enemy hits player's defense zone in ${zoneNames[zone]}!`);
+        const logString = document.createElement('p');
+        logString.innerHTML = `<span class="log-name">${enemyName.textContent}</span> hits player's defense zone in <span class="log-zone">${zoneNames[zone]}</span>!`;
+        gameLog.appendChild(logString);
+      }
     }
   }
 
   playerHealth.value -= enemyDamage;
   enemyHealth.value -= playerDamage;
 
-  console.log(`Player received ${enemyDamage} damage!`);
-  console.log(`Enemy received ${playerDamage} damage!`);
+  // console.log(`Player received ${enemyDamage} damage!`);
+  // console.log(`Enemy received ${playerDamage} damage!`);
 }
 
 attackButton.addEventListener('click', () => {
   chooseZones();
   exchangeAttacks();
+
+  if (playerHealth.value <= 0 || enemyHealth.value <= 0) {
+    overlay.classList.add('active');
+    if (playerHealth.value <= 0) {
+      overlayText.textContent = "Haha, you lost! But don't worry, it's not the end of the world!";
+    } else {
+      overlayText.textContent = "Woohoo! You've conquered the game! Now go celebrate!";
+    }
+  }
+});
+
+overlayButton.addEventListener('click', () => {
+  overlay.classList.remove('active');
+  showScreen('home');
 });

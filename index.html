@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/styles/style.css" />
     <link rel="stylesheet" href="assets/styles/normalize.css" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Forum&family=Indie+Flower&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Mozilla+Headline:wght@200..700&display=swap"
       rel="stylesheet"
     />
     <title>Not Fight Club</title>
@@ -145,8 +145,8 @@
               </div>
             </div>
             <div class="game__log_wrapper">
-              <div class="game__log">
-                <p>Какой-то текст</p>
+              <div class="game__log-container">
+                <div class="game__log"></div>
               </div>
             </div>
           </div>
@@ -200,13 +200,20 @@
               <span> Character name</span>
               <div class="settings__name-wrapper">
                 <span class="settings__name">Name</span>
-                <button class="settings__change-button" type="button" >
+                <button class="settings__change-button" type="button">
                   <img src="assets/images/edit.png" alt="Edit Icon" />
                 </button>
               </div>
               <div class="settings__input-wrapper">
-                <input type="text" placeholder="Enter your character's name" minlength="1" maxlength="20" id="settings-name" name="settings-name" />
-                <button type="button" class="settings__save-button" disabled >
+                <input
+                  type="text"
+                  placeholder="Enter your character's name"
+                  minlength="1"
+                  maxlength="20"
+                  id="settings-name"
+                  name="settings-name"
+                />
+                <button type="button" class="settings__save-button" disabled>
                   <img src="assets/images/ок.png" alt="Save Icon" />
                 </button>
               </div>
@@ -231,6 +238,14 @@
           </div>
         </div>
       </footer>
+      <div class="overlay">
+        <div class="overlay__text_wrapper">
+          <p class="overlay__text">GAME OVER</p>
+          <button type="button" class="overlay__close">
+            <img src="assets/images/close.png" alt="Close" />
+          </button>
+        </div>
+      </div>
     </div>
     <script src="index.js"></script>
   </body>

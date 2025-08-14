@@ -38,7 +38,7 @@ p {
   max-width: 1000px;
   min-height: 500px;
   width: 100%;
-  background: #000000;
+  background: #242424;
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -334,35 +334,43 @@ h1 {
 }
 
 .register-button,
-.game-button {
+.game-button,
+.continue-button,
+.character__edit-button {
   padding: 10px 20px;
   border-radius: 10px;
   outline: none;
   background-image: linear-gradient(to bottom, #996c24, #e39f32, #ffd700, #e39f32, #996c24);
   color: black;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
 
-.register-button:disabled {
+.register-button:disabled,
+.continue-button:disabled {
   background-image: none;
   background-color: gray;
   cursor: not-allowed;
 }
 
-.game-button {
+.game-button,
+.continue-button,
+.character__edit-button {
   width: 300px;
 }
 
 .register-button:hover,
-.game-button:hover {
+.game-button:hover,
+.continue-button:hover,
+.character__edit-button:hover {
   filter: drop-shadow(3px 0 3px white) drop-shadow(-3px 0 3px white);
 }
 
-.register-button:disabled:hover {
+.register-button:disabled:hover,
+.continue-button:disabled:hover {
   filter: none;
 }
 

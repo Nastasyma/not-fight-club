@@ -44,7 +44,13 @@ buttons.forEach((button) => {
   });
 });
 
-showScreen('register');
+function checkRegisteredPlayer() {
+  if (localStorage.getItem('_NFC-name')) {
+    showScreen('home');
+  } else {
+    showScreen('register');
+  }
+}
 
 // character
 
@@ -72,6 +78,7 @@ popupImages.forEach((image) => {
   image.addEventListener('click', () => {
     characterImage.src = image.src;
     gamePlayerImage.src = image.src;
+    // localStorage.setItem('_NFC-image', image.src);
     characterPopup.classList.remove('active');
   });
 });
@@ -117,6 +124,11 @@ const gameLog = document.querySelector('.game__log');
 const overlay = document.querySelector('.overlay');
 const overlayText = document.querySelector('.overlay__text');
 const overlayButton = document.querySelector('.overlay__close');
+const gameButton = document.querySelector('.game-button');
+const continueButton = document.querySelector('.continue-button');
+const homeButton = document.querySelector('.home-button');
+const wins = document.querySelector('.character__wins');
+const losses = document.querySelector('.character__losses');
 
 function checkZones() {
   const attackZonesSelected = Array.from(attackZoneCheckboxes).filter((checkbox) => checkbox.checked).length;
@@ -125,8 +137,24 @@ function checkZones() {
   attackButton.disabled = !(attackZonesSelected === 1 && defenseZonesSelected === 2);
 }
 
-attackZoneCheckboxes.forEach((checkbox) => checkbox.addEventListener('change', checkZones));
-defenseZoneCheckboxes.forEach((checkbox) => checkbox.addEventListener('change', checkZones));
+attackZoneCheckboxes.forEach((checkbox) =>
+  checkbox.addEventListener('change', () => {
+    checkZones();
+    // localStorage.setItem(
+    //   '_NFC-attackZones',
+    //   JSON.stringify(Array.from(attackZoneCheckboxes).map((checkbox) => checkbox.checked)),
+    // );
+  }),
+);
+defenseZoneCheckboxes.forEach((checkbox) =>
+  checkbox.addEventListener('change', () => {
+    checkZones();
+    // localStorage.setItem(
+    //   '_NFC-defenseZones',
+    //   JSON.stringify(Array.from(defenseZoneCheckboxes).map((checkbox) => checkbox.checked)),
+    // );
+  }),
+);
 
 checkZones();
 
@@ -153,21 +181,26 @@ const enemies = [
 
 const zoneNames = ['head', 'neck', 'body', 'belly', 'legs'];
 
-const enemy = enemies[Math.floor(Math.random() * enemies.length)];
-console.log(enemy);
+let enemy;
+let winsCount = 0;
+let lossesCount = 0;
+let isGameActive = false;
 
 const playerAttackZones = [];
 const playerDefenseZones = [];
 
 function setEnemy() {
+  enemy = enemies[Math.floor(Math.random() * enemies.length)];
+  console.log(enemy);
+
   enemyHealth.setAttribute('max', enemy.health);
   enemyHealth.setAttribute('value', enemy.health);
 
   enemyName.textContent = enemy.name;
   enemyImage.src = `assets/images/${enemy.name}.jpeg`;
-}
 
-setEnemy();
+  // localStorage.setItem('_NFC-enemy', JSON.stringify(enemy));
+}
 
 function chooseZones() {
   playerAttackZones.length = 0;
@@ -284,8 +317,20 @@ function exchangeAttacks() {
   playerHealth.value -= enemyDamage;
   enemyHealth.value -= playerDamage;
 
+  // localStorage.setItem('_NFC-playerHealth', playerHealth.value);
+  // localStorage.setItem('_NFC-enemyHealth', enemyHealth.value);
+  // localStorage.setItem('_NFC-gameLog', gameLog.innerHTML);
+
   // console.log(`Player received ${enemyDamage} damage!`);
   // console.log(`Enemy received ${playerDamage} damage!`);
+}
+
+function resetGame() {
+  playerHealth.value = 150;
+  attackZoneCheckboxes.forEach((checkbox) => (checkbox.checked = false));
+  defenseZoneCheckboxes.forEach((checkbox) => (checkbox.checked = false));
+  gameLog.innerHTML = '';
+  attackButton.disabled = true;
 }
 
 attackButton.addEventListener('click', () => {
@@ -293,11 +338,19 @@ attackButton.addEventListener('click', () => {
   exchangeAttacks();
 
   if (playerHealth.value <= 0 || enemyHealth.value <= 0) {
+    isGameActive = false;
+    // localStorage.setItem('_NFC-isGameActive', isGameActive);
     overlay.classList.add('active');
     if (playerHealth.value <= 0) {
       overlayText.textContent = "Haha, you lost! But don't worry, it's not the end of the world!";
+      lossesCount += 1;
+      losses.textContent = `Losses: ${lossesCount}`;
+      // localStorage.setItem('_NFC-losses', lossesCount);
     } else {
       overlayText.textContent = "Woohoo! You've conquered the game! Now go celebrate!";
+      winsCount += 1;
+      wins.textContent = `Wins: ${winsCount}`;
+      // localStorage.setItem('_NFC-wins', winsCount);
     }
   }
 });
@@ -305,4 +358,97 @@ attackButton.addEventListener('click', () => {
 overlayButton.addEventListener('click', () => {
   overlay.classList.remove('active');
   showScreen('home');
+  checkActiveGame();
+});
+
+gameButton.addEventListener('click', () => {
+  resetGame();
+  setEnemy();
+  isGameActive = true;
+  // localStorage.setItem('_NFC-isGameActive', isGameActive);
+});
+
+function checkActiveGame() {
+  if (isGameActive && playerHealth.value > 0 && enemyHealth.value > 0) {
+    continueButton.disabled = false;
+  } else {
+    continueButton.disabled = true;
+  }
+}
+
+checkActiveGame();
+
+homeButton.addEventListener('click', () => {
+  checkActiveGame();
+});
+
+function saveGame() {
+  localStorage.setItem('_NFC-isGameActive', isGameActive);
+  localStorage.setItem('_NFC-playerHealth', playerHealth.value);
+  localStorage.setItem('_NFC-enemyHealth', enemyHealth.value);
+  localStorage.setItem('_NFC-enemy', JSON.stringify(enemy));
+  localStorage.setItem('_NFC-gameLog', gameLog.innerHTML);
+  localStorage.setItem('_NFC-wins', winsCount);
+  localStorage.setItem('_NFC-losses', lossesCount);
+  localStorage.setItem('_NFC-playerImage', characterImage.src);
+  localStorage.setItem(
+    '_NFC-attackZones',
+    JSON.stringify(Array.from(attackZoneCheckboxes).map((checkbox) => checkbox.checked)),
+  );
+  localStorage.setItem(
+    '_NFC-defenseZones',
+    JSON.stringify(Array.from(defenseZoneCheckboxes).map((checkbox) => checkbox.checked)),
+  );
+}
+function loadGame() {
+  if (localStorage.getItem('_NFC-isGameActive')) {
+    isGameActive = localStorage.getItem('_NFC-isGameActive');
+  }
+  if (localStorage.getItem('_NFC-playerHealth')) {
+    playerHealth.value = localStorage.getItem('_NFC-playerHealth');
+  }
+  if (localStorage.getItem('_NFC-enemyHealth')) {
+    enemyHealth.value = localStorage.getItem('_NFC-enemyHealth');
+  }
+  if (localStorage.getItem('_NFC-enemy')) {
+    enemy = JSON.parse(localStorage.getItem('_NFC-enemy'));
+
+    enemyName.textContent = enemy.name;
+    enemyImage.src = `assets/images/${enemy.name}.jpeg`;
+    enemyHealth.setAttribute('max', enemy.health);
+  }
+  if (localStorage.getItem('_NFC-gameLog')) {
+    gameLog.innerHTML = localStorage.getItem('_NFC-gameLog');
+  }
+  if (localStorage.getItem('_NFC-wins')) {
+    winsCount = +localStorage.getItem('_NFC-wins');
+    wins.textContent = `Wins: ${winsCount}`;
+  }
+  if (localStorage.getItem('_NFC-losses')) {
+    lossesCount = +localStorage.getItem('_NFC-losses');
+    losses.textContent = `Losses: ${lossesCount}`;
+  }
+  if (localStorage.getItem('_NFC-playerImage')) {
+    characterImage.src = localStorage.getItem('_NFC-playerImage');
+    gamePlayerImage.src = localStorage.getItem('_NFC-playerImage');
+  }
+  if (localStorage.getItem('_NFC-attackZones')) {
+    attackZoneCheckboxes.forEach(
+      (checkbox, index) => (checkbox.checked = JSON.parse(localStorage.getItem('_NFC-attackZones'))[index]),
+    );
+  }
+  if (localStorage.getItem('_NFC-defenseZones')) {
+    defenseZoneCheckboxes.forEach(
+      (checkbox, index) => (checkbox.checked = JSON.parse(localStorage.getItem('_NFC-defenseZones'))[index]),
+    );
+  }
+}
+
+window.addEventListener('beforeunload', saveGame);
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadGame();
+  checkActiveGame();
+  checkRegisteredPlayer();
+  checkZones();
 });

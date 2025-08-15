@@ -6,7 +6,7 @@ body {
   background:
     center / cover no-repeat,
     rgba(0, 0, 0, 0.5);
-  background-image: url('../images/game.png');
+  background-image: url('../images//game.webp');
   background-blend-mode: multiply;
   background-attachment: fixed;
   color: #fff;
@@ -401,7 +401,7 @@ h1 {
 }
 
 .game__log-container {
-  min-height: 150px;
+  min-height: 110px;
   max-height: 150px;
   height: 100%;
   padding: 20px;
@@ -425,16 +425,14 @@ h1 {
   background-color: #e3bd32;
 }
 
-.log-name {
-  color: #ffd700;
-}
-
-.log-damage {
-  color: #ffd700;
-}
-
+.log-name,
+.log-damage,
 .log-zone {
   color: #ffd700;
+}
+
+.log-critical {
+  color: red;
 }
 
 .character__image-wrapper {
@@ -499,12 +497,17 @@ h1 {
   z-index: 100;
   visibility: hidden;
   opacity: 0;
+  overflow: auto;
   transition: all 0.2s ease-in-out;
+}
+
+.character__popup::-webkit-scrollbar {
+  appearance: none;
 }
 
 .character__popup-wrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   padding: 40px;
   gap: 10px;
@@ -692,4 +695,89 @@ h1 {
 .footer__container_info-copyright {
   font-size: 26px;
   color: #e3bd32;
+}
+
+@media (max-width: 500px) {
+  h1 {
+    font-size: 26px;
+  }
+
+  .register__input-wrapper {
+    font-size: 18px;
+  }
+
+  #name::placeholder,
+  #settings-name::placeholder {
+    font-size: 16px;
+  }
+
+  .register__wrapper {
+    padding: 20px;
+  }
+
+  .game-button,
+  .continue-button,
+  .character__edit-button {
+    width: 200px;
+    font-size: 16px;
+  }
+
+  .header__container,
+  .footer__container {
+    gap: 20px;
+    padding: 10px;
+  }
+
+  .header__nav-item-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .header__nav-item-icon img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .header__page-title {
+    font-size: 20px;
+  }
+
+  .game__wrapper {
+    padding: 10px;
+    font-size: 18px;
+    gap: 10px;
+  }
+
+  .game__character-health::after {
+    font-size: 12px;
+  }
+
+  .game__actions {
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .game__actions-title {
+    font-size: 12px;
+    text-align: center;
+    padding: 0;
+  }
+
+  .player-name {
+    font-size: 16px;
+  }
+
+  .game__actions-field_defence-zones-item input[type='checkbox'],
+  .game__actions-field_attack-zones-item input[type='checkbox'] {
+    width: 12px;
+    height: 12px;
+  }
+
+  .game__log {
+    font-size: 12px;
+  }
+
+  .game__log-container {
+    padding: 10px;
+  }
 }

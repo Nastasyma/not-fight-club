@@ -137,24 +137,8 @@ function checkZones() {
   attackButton.disabled = !(attackZonesSelected === 1 && defenseZonesSelected === 2);
 }
 
-attackZoneCheckboxes.forEach((checkbox) =>
-  checkbox.addEventListener('change', () => {
-    checkZones();
-    // localStorage.setItem(
-    //   '_NFC-attackZones',
-    //   JSON.stringify(Array.from(attackZoneCheckboxes).map((checkbox) => checkbox.checked)),
-    // );
-  }),
-);
-defenseZoneCheckboxes.forEach((checkbox) =>
-  checkbox.addEventListener('change', () => {
-    checkZones();
-    // localStorage.setItem(
-    //   '_NFC-defenseZones',
-    //   JSON.stringify(Array.from(defenseZoneCheckboxes).map((checkbox) => checkbox.checked)),
-    // );
-  }),
-);
+attackZoneCheckboxes.forEach((checkbox) => checkbox.addEventListener('change', checkZones));
+defenseZoneCheckboxes.forEach((checkbox) => checkbox.addEventListener('change', checkZones));
 
 checkZones();
 
@@ -177,6 +161,18 @@ const enemies = [
     defenseZones: 1,
     health: 100,
   },
+  {
+    name: 'Goblin',
+    attackZones: 2,
+    defenseZones: 2,
+    health: 80,
+  },
+  {
+    name: 'Harpy',
+    attackZones: 1,
+    defenseZones: 1,
+    health: 150,
+  },
 ];
 
 const zoneNames = ['head', 'neck', 'body', 'belly', 'legs'];
@@ -197,9 +193,7 @@ function setEnemy() {
   enemyHealth.setAttribute('value', enemy.health);
 
   enemyName.textContent = enemy.name;
-  enemyImage.src = `assets/images/${enemy.name}.jpeg`;
-
-  // localStorage.setItem('_NFC-enemy', JSON.stringify(enemy));
+  enemyImage.src = `assets/images/${enemy.name}.webp`;
 }
 
 function chooseZones() {
@@ -215,7 +209,7 @@ function chooseZones() {
     parseInt(defenseZones[1].getAttribute('data-index')),
   );
 
-  console.log('player', playerAttackZones, playerDefenseZones);
+  // console.log('player', playerAttackZones, playerDefenseZones);
 }
 function exchangeAttacks() {
   const enemyAttackZones = [];
@@ -237,7 +231,7 @@ function exchangeAttacks() {
     enemyDefenseZones.push(zone);
   }
 
-  console.log('enemy', enemyAttackZones, enemyDefenseZones);
+  // console.log('enemy', enemyAttackZones, enemyDefenseZones);
 
   let playerDamage = 0;
   let enemyDamage = 0;
@@ -253,7 +247,7 @@ function exchangeAttacks() {
         playerDamage += 10 * criticalDamage;
         // console.log(`Player deals critical damage to ${zoneNames[zone]}!`);
         const logString = document.createElement('p');
-        logString.innerHTML = `<span class="log-name">${characterName.textContent}</span> attacks with critical hit to <span class="log-zone">${zoneNames[zone]}</span> and deals <span class="log-damage">${10 * criticalDamage}</span> damage!`;
+        logString.innerHTML = `<span class="log-name">${characterName.textContent}</span> attacks with <span class="log-critical">critical hit</span> to <span class="log-zone">${zoneNames[zone]}</span> and deals <span class="log-damage">${10 * criticalDamage}</span> damage!`;
         gameLog.appendChild(logString);
       } else {
         playerDamage += 10;
@@ -289,7 +283,7 @@ function exchangeAttacks() {
         enemyDamage += 10 * criticalDamage;
         // console.log(`Enemy deals critical damage to ${zoneNames[zone]}!`);
         const logString = document.createElement('p');
-        logString.innerHTML = `<span class="log-name">${enemyName.textContent}</span> attacks with critical hit to <span class="log-zone">${zoneNames[zone]}</span> and deals <span class="log-damage">${10 * criticalDamage}</span> damage!`;
+        logString.innerHTML = `<span class="log-name">${enemyName.textContent}</span> attacks with <span class="log-critical">critical hit</span> to <span class="log-zone">${zoneNames[zone]}</span> and deals <span class="log-damage">${10 * criticalDamage}</span> damage!`;
         gameLog.appendChild(logString);
       } else {
         enemyDamage += 10;
@@ -317,10 +311,6 @@ function exchangeAttacks() {
   playerHealth.value -= enemyDamage;
   enemyHealth.value -= playerDamage;
 
-  // localStorage.setItem('_NFC-playerHealth', playerHealth.value);
-  // localStorage.setItem('_NFC-enemyHealth', enemyHealth.value);
-  // localStorage.setItem('_NFC-gameLog', gameLog.innerHTML);
-
   // console.log(`Player received ${enemyDamage} damage!`);
   // console.log(`Enemy received ${playerDamage} damage!`);
 }
@@ -339,18 +329,15 @@ attackButton.addEventListener('click', () => {
 
   if (playerHealth.value <= 0 || enemyHealth.value <= 0) {
     isGameActive = false;
-    // localStorage.setItem('_NFC-isGameActive', isGameActive);
     overlay.classList.add('active');
     if (playerHealth.value <= 0) {
       overlayText.textContent = "Haha, you lost! But don't worry, it's not the end of the world!";
       lossesCount += 1;
       losses.textContent = `Losses: ${lossesCount}`;
-      // localStorage.setItem('_NFC-losses', lossesCount);
     } else {
       overlayText.textContent = "Woohoo! You've conquered the game! Now go celebrate!";
       winsCount += 1;
       wins.textContent = `Wins: ${winsCount}`;
-      // localStorage.setItem('_NFC-wins', winsCount);
     }
   }
 });
@@ -365,7 +352,6 @@ gameButton.addEventListener('click', () => {
   resetGame();
   setEnemy();
   isGameActive = true;
-  // localStorage.setItem('_NFC-isGameActive', isGameActive);
 });
 
 function checkActiveGame() {

@@ -1,6 +1,6 @@
 # not-fight-club
 
-## [Deploy](nastasy-not-fight-club.netlify.app)
+## [Deploy](https://nastasy-not-fight-club.netlify.app/)
 
 ## Описание проекта
 

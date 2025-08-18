@@ -327,6 +327,8 @@ attackButton.addEventListener('click', () => {
   chooseZones();
   exchangeAttacks();
 
+  gameLog.scrollTop = gameLog.scrollHeight;
+
   if (playerHealth.value <= 0 || enemyHealth.value <= 0) {
     isGameActive = false;
     overlay.classList.add('active');
